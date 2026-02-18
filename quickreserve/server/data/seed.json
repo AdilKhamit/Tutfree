@@ -1,0 +1,41 @@
+[
+  {
+    "id": "v1",
+    "name": "TurboFix Auto Service",
+    "category": "sto",
+    "address": "Satpaev st, 10",
+    "phone": "+7 700 111 22 33",
+    "rating": 4.7,
+    "priceLevel": 2,
+    "lat": 43.2385,
+    "lng": 76.8891,
+    "workingHours": "09:00-21:00",
+    "slots": ["2026-12-18T18:10:00.000Z", "2026-12-18T18:40:00.000Z", "2026-12-18T19:20:00.000Z"]
+  },
+  {
+    "id": "v2",
+    "name": "Barber Point",
+    "category": "barbershop",
+    "address": "Abay ave, 78",
+    "phone": "+7 700 444 55 66",
+    "rating": 4.9,
+    "priceLevel": 3,
+    "lat": 43.2451,
+    "lng": 76.9286,
+    "workingHours": "10:00-22:00",
+    "slots": ["2026-12-18T18:55:00.000Z", "2026-12-18T19:30:00.000Z"]
+  },
+  {
+    "id": "v3",
+    "name": "AquaJet Car Wash",
+    "category": "carwash",
+    "address": "Rozybakiev st, 120",
+    "phone": "+7 700 777 88 99",
+    "rating": 4.2,
+    "priceLevel": 1,
+    "lat": 43.214,
+    "lng": 76.899,
+    "workingHours": "08:00-23:00",
+    "slots": ["2026-12-18T21:30:00.000Z", "2026-12-18T22:00:00.000Z"]
+  }
+]

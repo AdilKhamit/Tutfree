@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TutFree</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>TutFree</h1>
+      <p>Real-time service availability on a city map</p>
+    </header>
+
+    <section class="tabs">
+      <button id="tabClient" class="tab active">TutFree Client</button>
+      <button id="tabBusiness" class="tab">TutFree Business</button>
+    </section>
+
+    <section id="clientScreen" class="screen active">
+      <div class="filters">
+        <select id="categoryFilter">
+          <option value="">All categories</option>
+          <option value="sto">Auto service</option>
+          <option value="barbershop">Barbershop</option>
+          <option value="carwash">Car wash</option>
+        </select>
+        <label><input type="checkbox" id="freeNowFilter" /> Only free now</label>
+        <button id="refreshClient">Refresh map</button>
+      </div>
+      <main>
+        <div id="map"></div>
+        <div id="list"></div>
+      </main>
+    </section>
+
+    <section id="businessScreen" class="screen">
+      <div class="business-grid">
+        <article class="panel">
+          <h3>Onboarding</h3>
+          <input id="ownerName" placeholder="Owner name" />
+          <input id="ownerPhone" placeholder="Phone" />
+          <button id="createAccountBtn">Create account</button>
+          <input id="search2gis" placeholder="Search venue by name" />
+          <button id="searchBtn">Search</button>
+          <div id="searchResults"></div>
+        </article>
+        <article class="panel">
+          <h3>Availability toggle</h3>
+          <input id="businessVenueId" placeholder="Venue ID (2GIS ID)" />
+          <select id="statusMode">
+            <option value="free_now">We are free now</option>
+            <option value="next_window">Next window in 30 minutes</option>
+            <option value="busy">We are busy</option>
+          </select>
+          <input id="nextMinutes" type="number" value="30" min="5" max="240" />
+          <button id="setStatusBtn">Update live status</button>
+          <p id="statusResult"></p>
+        </article>
+        <article class="panel">
+          <h3>Incoming bookings</h3>
+          <button id="loadBookingsBtn">Load bookings</button>
+          <div id="bookingQueue"></div>
+        </article>
+      </div>
+    </section>
+
+    <dialog id="bookingDialog">
+      <form method="dialog" id="bookingForm">
+        <h3>Instant booking</h3>
+        <input type="hidden" id="venueId" />
+        <label>Name <input id="clientName" required /></label>
+        <label>Phone <input id="clientPhone" required /></label>
+        <menu>
+          <button value="cancel">Cancel</button>
+          <button id="submitBooking" value="default">Book</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>

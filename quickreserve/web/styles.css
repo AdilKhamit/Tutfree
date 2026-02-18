@@ -1,0 +1,163 @@
+:root {
+  --bg: #f5f7fb;
+  --card: #ffffff;
+  --text: #121722;
+  --muted: #6b7380;
+  --green: #1f9d55;
+  --yellow: #d29922;
+  --red: #d64545;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top right, #dce9ff, var(--bg) 45%);
+  color: var(--text);
+}
+
+header {
+  padding: 1rem 1.25rem 0.5rem;
+}
+
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0 1.25rem 0.75rem;
+}
+
+.tab {
+  background: #dde6fb;
+  color: #1f2d50;
+}
+
+.tab.active {
+  background: #1d5ce8;
+  color: #fff;
+}
+
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: block;
+}
+
+.filters {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0.75rem 1.25rem;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 1rem;
+  padding: 0 1.25rem 1.25rem;
+  height: calc(100vh - 220px);
+}
+
+#map,
+#list,
+.panel {
+  background: var(--card);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(20, 34, 54, 0.12);
+}
+
+#map {
+  min-height: 420px;
+}
+
+#list {
+  overflow: auto;
+  padding: 0.75rem;
+}
+
+.venue,
+.booking-card {
+  border: 1px solid #e6eaf2;
+  border-radius: 10px;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.status {
+  font-weight: 700;
+}
+
+.status.green {
+  color: var(--green);
+}
+
+.status.yellow {
+  color: var(--yellow);
+}
+
+.status.red {
+  color: var(--red);
+}
+
+.business-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(260px, 1fr));
+  gap: 1rem;
+  padding: 0 1.25rem 1.25rem;
+}
+
+.panel {
+  padding: 0.9rem;
+}
+
+.panel input,
+.panel select {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 0.55rem;
+  border: 1px solid #cfd6e7;
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+
+.result-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+button {
+  border: 0;
+  border-radius: 8px;
+  background: #1d5ce8;
+  color: white;
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+}
+
+button.danger {
+  background: #c63b3b;
+}
+
+@media (max-width: 1024px) {
+  main {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  #map {
+    height: 360px;
+  }
+
+  .business-grid {
+    grid-template-columns: 1fr;
+  }
+}
