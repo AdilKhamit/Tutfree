@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TutFree Business</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/company/styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="hero">
+        <p class="kicker">TutFree Business</p>
+        <h1>Регистрация компании</h1>
+        <p class="lead">Заполните данные. Информация будет сохранена на ваш сервер.</p>
+      </header>
+
+      <div id="errorBanner" class="error-banner hidden"></div>
+      <div id="successBanner" class="success-banner hidden"></div>
+
+      <section class="card">
+        <h2>Основная информация</h2>
+        <form id="companyForm" class="form-grid">
+          <label>
+            Название
+            <input id="name" value="СТО Expert" required />
+          </label>
+
+          <label>
+            Категория
+            <select id="category" required>
+              <option value="sto">СТО</option>
+              <option value="carwash">Автомойка</option>
+              <option value="barbershop">Барбершоп</option>
+              <option value="tire_service">Шиномонтаж</option>
+            </select>
+          </label>
+
+          <label class="full">
+            Адрес
+            <input id="address" placeholder="Улица, дом, бокс" required />
+          </label>
+
+          <label>
+            Телефон
+            <input id="phone" placeholder="+7 (___) ___-__-__" required />
+          </label>
+
+          <label>
+            Часы работы
+            <div class="hours-row">
+              <input id="workStart" type="time" value="09:00" required />
+              <input id="workEnd" type="time" value="18:00" required />
+              <select id="slotDuration">
+                <option value="60">1 час</option>
+                <option value="30">30 минут</option>
+                <option value="90">1.5 часа</option>
+              </select>
+            </div>
+          </label>
+
+          <div class="full services-block">
+            <div class="services-head">
+              <h3>Прайс</h3>
+              <button type="button" id="addServiceBtn" class="ghost">+ Услуга</button>
+            </div>
+            <div id="servicesList"></div>
+          </div>
+
+          <div class="full actions">
+            <button type="submit" id="publishBtn">Опубликовать</button>
+          </div>
+        </form>
+      </section>
+
+      <section id="scheduleCard" class="card hidden">
+        <div class="schedule-head">
+          <h2>График занятости</h2>
+          <p>Отметьте занятые слоты и сохраните расписание.</p>
+        </div>
+        <div id="slotsGrid" class="slots-grid"></div>
+        <button id="saveScheduleBtn">Сохранить и опубликовать</button>
+      </section>
+    </main>
+
+    <script src="/static/company/app.js"></script>
+  </body>
+</html>

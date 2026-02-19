@@ -1,4 +1,5 @@
 from uuid import UUID
+from math import radians, sin, cos, asin, sqrt
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import select
@@ -15,8 +16,16 @@ from app.services.twogis import search_nearby
 router = APIRouter(prefix="/client", tags=["client"])
 
 
+def haversine_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
+    d_lat = radians(lat2 - lat1)
+    d_lon = radians(lon2 - lon1)
+    a = sin(d_lat / 2) ** 2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(d_lon / 2) ** 2
+    return 2 * 6371 * asin(sqrt(a))
+
+
 @router.get("/map/nearby")
 async def map_nearby(
+    db: AsyncSession = Depends(get_db),
     lat: float = Query(...),
     lng: float = Query(...),
     radius_km: float = Query(5, ge=0.1, le=20),
@@ -24,17 +33,51 @@ async def map_nearby(
     category: str | None = Query(default=None),
 ):
     twogis_items = await search_nearby(city=city, lat=lat, lng=lng, radius_km=radius_km, category=category)
-    gis_ids = [item["gis_id"] for item in twogis_items]
+    org_query = select(Organization).where(Organization.city == city)
+    if category:
+        org_query = org_query.where(Organization.category == category)
+    org_result = await db.execute(org_query)
+    local_orgs = list(org_result.scalars().all())
+
+    filtered_local = []
+    for org in local_orgs:
+        distance = haversine_km(lat, lng, org.lat, org.lng)
+        if distance <= radius_km:
+            filtered_local.append((org, distance))
+
+    gis_ids = [item["gis_id"] for item in twogis_items] + [org.gis_id for org, _ in filtered_local]
     statuses = await get_live_statuses(gis_ids)
 
-    merged = []
+    merged: list[dict] = []
     for item in twogis_items:
         merged.append(
             {
+                "id": f"2gis:{item['gis_id']}",
                 **item,
                 "live_status": statuses.get(item["gis_id"], "offline"),
+                "source": "2gis",
+                "can_book": False,
             }
         )
+
+    for org, distance in filtered_local:
+        merged.append(
+            {
+                "id": str(org.id),
+                "gis_id": org.gis_id,
+                "name": org.name,
+                "address": None,
+                "lat": org.lat,
+                "lng": org.lng,
+                "rating": None,
+                "distance_km": round(distance, 3),
+                "live_status": statuses.get(org.gis_id, "offline"),
+                "source": "local",
+                "can_book": True,
+            }
+        )
+
+    merged.sort(key=lambda item: item.get("distance_km", 999999))
     return {"items": merged}
 
 

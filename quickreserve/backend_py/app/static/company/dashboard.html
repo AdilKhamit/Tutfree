@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Панель управления записями</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/company/styles.css" />
+    <style>
+      .dashboard-grid {
+        display: grid;
+        gap: 12px;
+      }
+      .booking-item {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 12px;
+        background: #fff;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .badge {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: #eaf2ff;
+        color: #1f4cb6;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header class="hero">
+        <p class="kicker">TutFree Business</p>
+        <h1>Панель управления записями</h1>
+        <p class="lead">Здесь отображаются заявки клиентов и их статусы.</p>
+      </header>
+
+      <section class="card">
+        <p>Компания ID: <span id="companyIdLabel" class="badge">—</span></p>
+        <p class="muted">В этом MVP список можно расширить отдельным endpoint для записей компании.</p>
+      </section>
+
+      <section class="card">
+        <h2>Текущие записи</h2>
+        <div id="bookingsRoot" class="dashboard-grid"></div>
+      </section>
+    </main>
+
+    <script src="/static/company/dashboard.js"></script>
+  </body>
+</html>

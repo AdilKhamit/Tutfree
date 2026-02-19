@@ -2,7 +2,7 @@ import enum
 import uuid
 from datetime import datetime
 
-from sqlalchemy import String, DateTime, Boolean, Enum, ForeignKey, Float, UniqueConstraint
+from sqlalchemy import String, DateTime, Boolean, Enum, ForeignKey, Float, UniqueConstraint, JSON, Integer
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -87,3 +87,22 @@ class Booking(Base):
     status: Mapped[BookingStatus] = mapped_column(Enum(BookingStatus, name="booking_status"), default=BookingStatus.pending, index=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.utcnow)
     confirmed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
+
+class CompanyProfile(Base):
+    __tablename__ = "company_profiles"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    company_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("organizations.id", ondelete="CASCADE"),
+        unique=True,
+        index=True,
+    )
+    address: Mapped[str] = mapped_column(String(255))
+    phone: Mapped[str] = mapped_column(String(64))
+    work_start: Mapped[str] = mapped_column(String(8))
+    work_end: Mapped[str] = mapped_column(String(8))
+    slot_duration_minutes: Mapped[int] = mapped_column(Integer, default=60)
+    services: Mapped[list] = mapped_column(JSON, default=list)
+    occupied_slots: Mapped[list] = mapped_column(JSON, default=list)
